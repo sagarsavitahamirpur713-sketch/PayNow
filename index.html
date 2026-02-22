@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PayNow - Smart Payment System</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#141e30,#243b55);
+    color:white;
+}
+
+/* Navbar */
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8%;
+}
+
+.logo{
+    font-size:26px;
+    font-weight:700;
+    color:#00e0ff;
+}
+
+.nav-links a{
+    color:white;
+    text-decoration:none;
+    margin-left:25px;
+    transition:0.3s;
+}
+
+.nav-links a:hover{
+    color:#00e0ff;
+}
+
+/* Hero */
+.hero{
+    text-align:center;
+    padding:100px 20px 70px;
+}
+
+.hero h1{
+    font-size:48px;
+    font-weight:700;
+}
+
+.hero span{
+    color:#00e0ff;
+}
+
+.hero p{
+    margin-top:20px;
+    font-size:18px;
+    opacity:0.8;
+}
+
+.hero button{
+    margin-top:30px;
+    padding:14px 35px;
+    border:none;
+    border-radius:30px;
+    background:#00e0ff;
+    color:black;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.hero button:hover{
+    background:white;
+}
+
+/* Features */
+.features{
+    padding:70px 8%;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+}
+
+.feature-card{
+    background:rgba(255,255,255,0.08);
+    padding:30px;
+    border-radius:20px;
+    backdrop-filter:blur(12px);
+    transition:0.3s;
+}
+
+.feature-card:hover{
+    transform:translateY(-8px);
+}
+
+.feature-card h3{
+    margin-bottom:15px;
+    color:#00e0ff;
+}
+
+/* Payment Section */
+.payment-section{
+    padding:80px 8%;
+    text-align:center;
+}
+
+.payment-form{
+    background:white;
+    color:black;
+    padding:40px;
+    border-radius:20px;
+    max-width:420px;
+    margin:auto;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+.payment-form h2{
+    margin-bottom:20px;
+}
+
+.payment-form input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border-radius:10px;
+    border:1px solid #ccc;
+}
+
+.payment-form button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#243b55;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.payment-form button:hover{
+    opacity:0.85;
+}
+
+/* Transaction History */
+.history{
+    margin-top:40px;
+    text-align:left;
+}
+
+.history h3{
+    margin-bottom:15px;
+}
+
+.history ul{
+    list-style:none;
+}
+
+.history li{
+    background:#f3f3f3;
+    margin-bottom:10px;
+    padding:10px;
+    border-radius:8px;
+}
+
+/* Footer */
+footer{
+    text-align:center;
+    padding:30px;
+    opacity:0.7;
+    font-size:14px;
+}
+
+/* Responsive */
+@media(max-width:768px){
+    .hero h1{
+        font-size:32px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+    <div class="logo">PayNow</div>
+    <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#features">Features</a>
+        <a href="#payment">Transfer</a>
+        <a href="#">Contact</a>
+    </div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero">
+    <h1>Welcome to <span>PayNow</span></h1>
+    <p>Instant. Secure. Reliable Digital Payments.</p>
+    <button onclick="scrollToPayment()">Send Money</button>
+</section>
+
+<!-- Features -->
+<section class="features" id="features">
+    <div class="feature-card">
+        <h3>⚡ Instant Transfer</h3>
+        <p>Send money instantly with real-time transaction processing.</p>
+    </div>
+    <div class="feature-card">
+        <h3>🔐 Secure Encryption</h3>
+        <p>End-to-end encrypted payment infrastructure.</p>
+    </div>
+    <div class="feature-card">
+        <h3>📊 Transaction Tracking</h3>
+        <p>View detailed history of your payments anytime.</p>
+    </div>
+</section>
+
+<!-- Payment Section -->
+<section class="payment-section" id="payment">
+    <div class="payment-form">
+        <h2>Transfer Money</h2>
+        <input type="text" id="receiver" placeholder="Receiver UPI ID">
+        <input type="number" id="amount" placeholder="Amount (₹)">
+        <button onclick="sendMoney()">Pay Now</button>
+
+        <div class="history">
+            <h3>Transaction History</h3>
+            <ul id="historyList"></ul>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    © 2026 PayNow Payment System. All rights reserved.
+</footer>
+
+<script>
+function scrollToPayment(){
+    document.getElementById("payment").scrollIntoView({behavior:"smooth"});
+}
+
+function sendMoney(){
+    const receiver=document.getElementById("receiver").value;
+    const amount=document.getElementById("amount").value;
+
+    if(!receiver.includes("@")){
+        alert("Invalid UPI ID");
+        return;
+    }
+
+    if(amount<=0 || amount===""){
+        alert("Enter valid amount");
+        return;
+    }
+
+    const historyList=document.getElementById("historyList");
+    const li=document.createElement("li");
+    li.innerText="Paid ₹"+amount+" to "+receiver+" ✔";
+    historyList.appendChild(li);
+
+    alert("Payment Successful!");
+}
+</script>
+
+</body>
+</html>
